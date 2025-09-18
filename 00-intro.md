@@ -10,6 +10,10 @@ A gossip protocol is a decentralized communication method used in distributed sy
 
 https://docs.corelightning.org/docs/home
 
+# BOLTS
+
+https://github.com/lightning/bolts/tree/master
+
 # Bitcoin network vs Lightning network
 
 https://www.ka.app/learn/bitcoin-network-vs-lightning
