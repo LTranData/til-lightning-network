@@ -1,3 +1,48 @@
+# How bitcoin work
+
+## Core
+
+Bitcoin is a decentralized digital currency operating on a peer-to-peer (P2P) network without a central authority. Its core is a public, distributed ledger called the blockchain.
+
+## Network
+
+The Bitcoin network is a P2P mesh topology. There's no central server; instead, every computer running the Bitcoin software (a node) connects to several other nodes. When you initiate a transaction, your node broadcasts it to its connected peers, who in turn relay it to their own peers. This ripple effect ensures the transaction propagates rapidly across the entire network.
+
+This decentralized architecture provides censorship resistance and resilience. If some nodes go offline, the network remains operational as data can still be routed through other active connections. Full nodes maintain a complete and updated copy of the entire blockchain, validating transactions and blocks against the protocol's rules.
+
+## Data structure
+
+The blockchain is a linked list of blocks, but with a cryptographic twist that ensures its immutability. Each block contains a header and a list of transactions.
+
+- Block Header: A fixed-size data structure (80 bytes) containing metadata:
+
+Version: Indicates the software version used.
+
+Previous Block Hash: A cryptographic hash of the previous block's header. This is the "link" that chains the blocks together. Altering a past block's data would change its hash, invalidating the link and all subsequent blocks.
+
+Merkle Root: A single hash that summarizes all transactions in the block.
+
+Timestamp: The time the block was created.
+
+Difficulty Target (nBits): An encoded representation of the target hash miners must find.
+
+Nonce: A 32-bit arbitrary number that miners change to solve the Proof-of-Work puzzle.
+
+- Merkle Tree: All transactions within a block are organized into a Merkle tree (or hash tree). This binary tree data structure uses a series of cryptographic hashes to condense all transaction data into a single root hash, the Merkle Root. To build the tree, transaction hashes are paired and hashed together recursively until only one hash remains.  This provides an efficient way to verify if a transaction is included in a block without having to download or process all other transactions in that block.
+
+## Bitcoin Mining
+
+Bitcoin mining is the process of creating new blocks to add to the blockchain. It serves two primary functions: securing the network and issuing new bitcoins. Miners compete to solve a computationally intensive puzzle, known as Proof-of-Work (PoW).
+
+- Transaction Aggregation: A miner collects a set of pending transactions from the mempool (a holding area for unconfirmed transactions) and assembles them into a new block. They then build a Merkle tree from these transactions to compute the Merkle Root.
+
+- The Hashing Puzzle: The miner must find a nonce such that when the block header (including the Merkle Root, previous block hash, and other metadata) is passed through a cryptographic hash function (SHA-256), the resulting hash is less than or equal to the network's difficulty target.
+
+- Broadcasting the Solution: The first miner to find a valid hash broadcasts their block to the network. Other nodes verify the solution by running the same hash function on the proposed block header. Since verification is trivial, it takes very little time.
+
+- Reward and Confirmation: Once a block is verified by the network, it is added to the blockchain. The successful miner receives a block reward of newly minted bitcoins (currently 3.125 BTC) plus the transaction fees from all transactions within that block. The transactions in the new block are now considered "confirmed."
+
+
 # What is Lightning network
 
 A second-layer payment protocol built on top of the Bitcoin blockchain that enables fast, low-cost, and scalable Bitcoin transactions by using off-chain payment channels. It allows users to conduct multiple transactions with each other without broadcasting every single one to the main blockchain, significantly reducing fees and congestion. Once a payment channel is opened and closed, only the final balance is settled on the main Bitcoin network, using smart contracts for security.
